@@ -1,0 +1,104 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*"
+        ]
+      },
+      "type": "@mentoster/n8n-nodes-telegram-polling.telegramPollingTrigger",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        0
+      ],
+      "id": "f960dec6-3276-46b7-b97b-76ce7b3f4ab5",
+      "name": "Telegram Trigger",
+      "credentials": {
+        "telegramApi": {
+          "id": "bB4Lut7l79HNREZj",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a567f3c0-db1b-4e3d-8b3b-b206bf38b077",
+              "name": "=vacancy",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        -96
+      ],
+      "id": "343f7bce-769a-45ed-a63b-085e41cbb239",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.hh.ru/vacancies?text={{ $json.vacancy }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        16,
+        -96
+      ],
+      "id": "7ad162c9-9d51-4bdd-bb68-9ea34f539490",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "05c8d278-fa35-4701-b87b-5f569f72200a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9639d5dd6ce9b4434ec891051e73040532f03350d026141f964d2a037f799f94"
+  },
+  "nodeGroups": [],
+  "id": "U8RBXTCwmJJKLY3t",
+  "tags": []
+}
